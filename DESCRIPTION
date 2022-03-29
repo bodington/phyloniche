@@ -1,0 +1,19 @@
+Package: phyloniche
+Title: Ecological indicators for phyloseq objects
+Version: 0.0.0.9000
+Authors@R: 
+    person("Dylan", "Bodington", , "bodington@gmail.com", role = c("cre"),
+           comment = c(ORCID = "0000-0002-5752-8725D"))
+Description: Ecological indicators for phyloseq objects, using scripts from https://github.com/ATGenomics/phyloseq-extra
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Depends:
+    phyloseq
+Imports: 
+    dplyr,
+    ggplot2,
+    parallel,
+    tidyr
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
