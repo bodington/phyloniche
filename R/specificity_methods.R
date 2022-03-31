@@ -338,9 +338,9 @@ plot_specificity <- function(specOTUS, y = "specificity", color = "level",
 ## Plot local specificity against relative abundance
 #' @export
 plot_local_specificity <- function(specOTUS, y = "specificity", formula = y~x,
-                                   color = "level", method = "loess",
+                                   color = "level", shape = 16, method = "loess",
                                    se = TRUE, plot = TRUE) {
-  p <- ggplot(specOTUS, aes_string(x = "abundance", y = y, color = color)) + geom_point(size = 2)
+  p <- ggplot(specOTUS, aes_string(x = "abundance", y = y, color = color, shape = shape)) + geom_point(size = 2)
   p <- p + labs(x = "Overall abundance (log10)", y = y)
   p <- p + scale_x_log10()
   p <- p + facet_wrap(~level)
@@ -351,7 +351,8 @@ plot_local_specificity <- function(specOTUS, y = "specificity", formula = y~x,
   p <- p + theme(strip.text.x = element_text(size = 12),
                  strip.text.y = element_text(size = 12),
                  axis.text.x  = element_text(angle=0, size=12))
-  ## p <- p + guides(colour  = guide_legend("Treatment"))
+  p <- p + guides(colour  = guide_legend(
+      override.aes = list(shape = shape)))
   p <- p + geom_smooth(color = "grey45", method = method, formula = formula, se = FALSE)
   specmin <- ifelse(attr(specOTUS, "index") %in% c("simpson", "shannon"),
                        1/length(levels(specOTUS$level)),
