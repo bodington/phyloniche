@@ -314,8 +314,9 @@ estimate_local_specificity <- function(physeq, group,
 plot_specificity <- function(specOTUS, y = "specificity", color = "level",
                              se = TRUE, plot = TRUE) {
   p <- ggplot(specOTUS, aes_string(x = "abundance", y = y, color = color)) + geom_point(size = 2)
-  p <- p + labs(x = "Overall abundance (log10)", y = y)
-  p <- p + scale_x_log10()
+  p <- p + labs(x = "Relative Abundance (log10)", y = "Specificity")
+  p <- p + scale_x_log10(limits = c(0.00001, 1), breaks = c(0.001, 0.1))
+  p <- p + ylim(0, 1)
   if (se) {
     p <- p + geom_linerange(aes(ymin = q25, ymax = q75), alpha = 0.2)
   }
@@ -323,7 +324,7 @@ plot_specificity <- function(specOTUS, y = "specificity", color = "level",
                  strip.text.y = element_text(size = 10),
                  axis.text.x  = element_text(angle=0, size=8))
   ## p <- p + guides(colour  = guide_legend("Treatment"))
-  p <- p + geom_smooth(aes(color = NULL), method = "loess", se = FALSE)
+  p <- p + geom_smooth(aes(color = NULL), method = "loess", se = se)
   specmin <- ifelse(attr(specOTUS, "index") %in% c("simpson", "shannon"),
                        1/length(levels(specOTUS$level)),
                        0)
@@ -342,6 +343,7 @@ plot_local_specificity <- function(specOTUS, y = "specificity", formula = y~x,
   p <- ggplot(specOTUS, aes_string(x = "abundance", y = y, color = color)) + geom_point(size = 2)
   p <- p + labs(x = "Relative Abundance (log10)", y = "Specificity")
   p <- p + scale_x_log10(limits = c(0.00001, 1), breaks = c(0.001, 0.1))
+  p <- p + ylim(0, 1)
   p <- p + facet_wrap(~level)
   if (se) {
     p <- p + geom_linerange(aes(ymin = q25, ymax = q75), alpha = 0.2)
