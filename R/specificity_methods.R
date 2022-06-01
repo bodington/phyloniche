@@ -352,8 +352,7 @@ plot_local_specificity <- function(specOTUS, y = "specificity", formula = y~x,
   p <- p + theme(strip.text.x = element_text(size = 10),
                  strip.text.y = element_text(size = 10),
                  axis.text.x  = element_text(angle=0, size=8))
-  p <- p + guides(colour  = guide_legend(
-      override.aes = list(shape = shape)))
+#  p <- p + guides(colour  = guide_legend(      override.aes = list(shape = shape)))
   p <- p + geom_smooth(color = "grey45", method = method, formula = formula, se = se)
   specmin <- ifelse(attr(specOTUS, "index") %in% c("simpson", "shannon"),
                        1/length(levels(specOTUS$level)),
